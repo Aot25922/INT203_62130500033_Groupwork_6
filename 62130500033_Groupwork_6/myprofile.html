@@ -17,32 +17,61 @@
   <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
   <!-- Vue CDN -->
   <script src="https://unpkg.com/vue@next"></script>
+  <!--Validate.js-->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
 
 </head>
 
-<body>
-  <div class="h-screen bg-gray-300" id="app">
+<body class="bg-gray-300">
+  <div class="h-screen " id="app">
     <div class="container flex justify-center py-52 ">
-      <div class="p-3 bg-white rounded-xl max-w-lg hover:shadow">
-        <div class="flex justify-between w-full"> <img :src="url" :width="width" class="rounded-lg">
+      <div class="p-3 bg-green-100 rounded-xl max-w-lg hover:shadow">
+        <div class="flex justify-between w-full"> <img :src="url" width="150" class="rounded-lg h-64">
           <div class="ml-2">
-            <div class="p-3">
-              <h3 class="text-2xl">{{firstname}} {{lastname}}</h3> <span>{{position}}</span>
+            <div v-if="errors" class="text-red-500">
+              <b>Please correct the following error(s):</b>
+              <ul>
+                <li v-for="error in errors" class="text-red-500">{{ error }}</li>
+              </ul>
             </div>
-            <div class="flex justify-between items-center p-3 bg-gray-200 rounded-lg">
-              <div class="mr-3"> <span class="text-gray-400 block">{{article}}</span> <span
-                  class="font-bold text-black text-xl">{{article_no}}</span> </div>
-              <div class="mr-3"> <span class="text-gray-400 block">{{followers}}</span> <span
-                  class="font-bold text-black text-xl">{{followers_no}}</span> </div>
-              <div> <span class="text-gray-400 block">{{ratings}}</span> <span
-                  class="font-bold text-black text-xl">{{ratings_no}}</span> </div>
+            <div v-else>
+              <p>You Firstname : {{Firstname}}</p>
+              <p>You Lastame : {{Lastname}}</p>
+              <p>You Age : {{Age}}</p>
+              <p>You Nickname : {{Nickname}}</p>
+              <p>You Education : {{Chosensubject}}</p>
             </div>
+            <form @submit.prevent="checkForm" action="register_subject.php" method="post">
+              <div class="p-3 grid grid-cols-2">
+                <div class="px-2">
+                  <h3 class="text-2xl">Firstname</h3>
+                  <input v-model="firstname" placeholder="Firstname" class="w-36">
+                </div>
+                <div class="px-2">
+                  <h3 class="text-2xl">Lastname</h3>
+                  <input v-model="lastname" placeholder="Lastname" class="w-36">
+                </div>
+                <div class="px-2">
+                  <h3 class="text-2xl">Age</h3>
+                  <input v-model="age" placeholder="Age" class="w-36">
+                </div>
+                <div class="px-2">
+                  <h3 class="text-2xl">Nickname</h3>
+                  <input v-model="nickname" placeholder="Nickname" class="w-36">
+                </div>
+                <div class="px-2">
+                  <label class="text-2xl" for="option">Education </label>
+                  <select v-model="chosensubject" class="w-72" name="option" id="option">
+                    <option v-for="subject in subject_lists" :value="subject.subject_name">
+                      {{subject.subject_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <input class="w-full h-12 rounded-md border-2 text-md hover:shadow hover:bg-red-700 hover:border-red-700 hover:text-white " type="submit" value="Submit" 
+              @click="submit"/>
+            </form>
           </div>
-        </div>
-        <div class="flex justify-between items-center mt-2 gap-2"> <button
-            class="w-full h-12 rounded-md border-2 text-md hover:shadow hover:bg-red-700 hover:border-red-700 hover:text-white ">{{chats}}</button>
-          <button
-            class="w-full h-12 rounded-md bg-blue-700 text-white text-md hover:shadow hover:bg-blue-800">{{chats}}</button>
         </div>
       </div>
     </div>
