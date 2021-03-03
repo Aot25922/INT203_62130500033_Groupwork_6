@@ -29,6 +29,11 @@ const constraints = {
     },
     chosensubject: {
         presence: true
+    },
+    email: {
+        email:{
+        message: "doesn't look like a valid "
+      }
     }
 }
 const app = {
@@ -40,6 +45,7 @@ const app = {
             Age: null,
             Education: null,
             Nickname: null,
+            Email:null,
             Chosensubject:"",
             subject_lists: [{
                     subject_id: 1,
@@ -63,7 +69,8 @@ const app = {
                                     lastname: this.Lastname,
                                     age: this.Age,
                                     nickname:this.Nickname,
-                                    chosensubject: this.Chosensubject},
+                                    chosensubject: this.Chosensubject,
+                                     email:this.Email},
                                     constraints)
             if(this.errors){
                 e.preventDefault();
@@ -78,6 +85,7 @@ const app = {
             this.Nickname=this.nickname
             this.Age=this.age
             this.Chosensubject=this.chosensubject
+            this.Email=this.email
         }
     }
 
